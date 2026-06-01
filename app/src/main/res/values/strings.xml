@@ -1,0 +1,29 @@
+<resources>
+    <string name="app_name">Prayer Time Sample</string>
+    <string name="prayer_times">Prayer Times</string>
+    <string name="settings">Settings</string>
+    <string name="refresh">Refresh</string>
+    <string name="next_prayer_label">Next: %1$s</string>
+    <string name="permissions">Permissions</string>
+    <string name="notification_mode">Prayer notification mode</string>
+    <string name="permission_location">Location</string>
+    <string name="permission_notifications">Notifications</string>
+    <string name="permission_exact_alarm">Exact alarm</string>
+    <string name="permission_battery">Battery optimization</string>
+    <string name="grant_location">Grant location</string>
+    <string name="grant_notifications">Grant notifications</string>
+    <string name="open_exact_alarm_settings">Open exact alarm settings</string>
+    <string name="open_battery_settings">Battery optimization settings</string>
+    <string name="status_granted">Granted</string>
+    <string name="status_denied">Denied</string>
+    <string name="status_permanently_denied">Permanently denied</string>
+    <string name="notification_channel_prayer">Prayer notifications</string>
+    <string name="notification_channel_prayer_desc">Prayer time alerts</string>
+    <string name="notification_channel_azan">Azan</string>
+    <string name="notification_channel_azan_desc">Azan playback notifications</string>
+    <string name="prayer_notification_title">%1$s prayer time</string>
+    <string name="prayer_notification_body">It is %1$s</string>
+    <string name="stop_azan">Stop Azan</string>
+    <string name="location_unavailable">Location unavailable</string>
+    <string name="location_resolving_address">Resolving address…</string>
+</resources>

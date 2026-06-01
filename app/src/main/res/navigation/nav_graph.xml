@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/prayerFragment">
+
+    <fragment
+        android:id="@+id/prayerFragment"
+        android:name="com.orbitalsonic.prayertimesample.presentation.prayer.PrayerFragment"
+        android:label="@string/prayer_times">
+        <action
+            android:id="@+id/action_prayer_to_settings"
+            app:destination="@id/settingsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.orbitalsonic.prayertimesample.presentation.settings.SettingsFragment"
+        android:label="@string/settings" />
+</navigation>
