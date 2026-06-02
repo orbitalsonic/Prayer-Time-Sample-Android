@@ -27,7 +27,7 @@ Tap the icon on the right of a row to cycle modes:
 | Icon | Mode | Behavior |
 |------|------|----------|
 | `ic_notification_off` | Disabled | No alarm, no notification |
-| `ic_notification` | Notification only | Alert at prayer time |
+| `ic_notification_on` | Notification only | Alert at prayer time |
 | `ic_notification_azan` | Azan | Notification + `res/raw/azan.mp3` |
 
 **Sunrise** cycles only: Disabled ↔ Notification only (never Azan).
