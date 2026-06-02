@@ -1,114 +1,402 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical">
     <LinearLayout
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp">
+        android:minHeight="?attr/actionBarSize"
+        app:layout_constraintHeight_min="?attr/actionBarSize"
+        android:orientation="horizontal"
+        android:layout_marginHorizontal="16dp"
+        app:layout_constraintTop_toTopOf="parent"
+        android:gravity="center"
+        >
 
-        <TextView
-            android:layout_width="match_parent"
+        <ImageView
+            android:id="@+id/btnBack"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/permissions"
-            android:textAppearance="?attr/textAppearanceTitleMedium" />
+            android:importantForAccessibility="no"
+            android:src="@drawable/ic_back"
+            android:background="?selectableItemBackgroundBorderless"
+            app:tint="@color/black" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/toolbar_title"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingVertical="8dp">
+            android:text="@string/settings"
+            android:textColor="@color/black"
+            android:textAppearance="?attr/textAppearanceTitleMedium"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:layout_weight="1"
+            android:layout_marginStart="16dp"
+            />
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/permission_location" />
-
-            <TextView
-                android:id="@+id/locationStatus"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnLocationPermission"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/grant_location" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingVertical="8dp">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/permission_notifications" />
-
-            <TextView
-                android:id="@+id/notificationStatus"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnNotificationPermission"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/grant_notifications" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingVertical="8dp">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/permission_exact_alarm" />
-
-            <TextView
-                android:id="@+id/exactAlarmStatus"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnExactAlarm"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/open_exact_alarm_settings" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingVertical="8dp">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/permission_battery" />
-
-            <TextView
-                android:id="@+id/batteryStatus"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnBatterySettings"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/open_battery_settings" />
     </LinearLayout>
-</ScrollView>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="10dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/prayer_settings"
+                android:textAppearance="?attr/textAppearanceTitleMedium" />
+
+            <LinearLayout
+                android:id="@+id/appSettingsBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/bg_card"
+                android:orientation="vertical"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/appSettingsHeading">
+
+                <RelativeLayout
+                    android:id="@+id/btnPrayerTimeConvention"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp">
+
+                    <ImageView
+                        android:id="@+id/iv_ptc_move"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:importantForAccessibility="no"
+                        android:src="@drawable/ic_move_forward"
+                         />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/mtv_ptc_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_toStartOf="@+id/iv_ptc_move"
+                        android:includeFontPadding="false"
+                        android:paddingEnd="10dp"
+                        android:text="@string/prayer_time_convention"
+                        android:textSize="14sp" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/mtv_ptc_organization"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/mtv_ptc_title"
+                        android:layout_toStartOf="@+id/iv_ptc_move"
+                        android:includeFontPadding="false"
+                        android:paddingEnd="10dp"
+                        android:textColor="?attr/colorPrimary"
+                        android:textSize="12sp"
+                        tools:text="University of Islamic Sciences, Karachi" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/btnAsrTimeCalculation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginEnd="5dp">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/mtv_atc_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_toStartOf="@+id/iv_atc_move"
+                        android:includeFontPadding="false"
+                        android:paddingEnd="10dp"
+                        android:text="@string/asr_time_calculation"
+                        android:textSize="14sp" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/mtv_atc_juristic_method"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/mtv_atc_title"
+                        android:layout_toStartOf="@+id/iv_atc_move"
+                        android:includeFontPadding="false"
+                        android:paddingEnd="10dp"
+                        android:textColor="?attr/colorPrimary"
+                        android:textSize="12sp"
+                        tools:text="Hanafi" />
+
+                    <ImageView
+                        android:id="@+id/iv_atc_move"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:importantForAccessibility="no"
+                        android:src="@drawable/ic_move_forward"
+                         />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/btnManualCorrection"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginEnd="5dp">
+
+                    <ImageView
+                        android:id="@+id/iv_mc_move"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:importantForAccessibility="no"
+                        android:src="@drawable/ic_move_forward"
+                         />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/mtv_mc_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_toStartOf="@+id/iv_mc_move"
+                        android:includeFontPadding="false"
+                        android:paddingEnd="10dp"
+                        android:text="@string/manual_correction"
+                        android:textSize="14sp" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/mtv_manual_correction"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/mtv_mc_title"
+                        android:layout_toStartOf="@+id/iv_mc_move"
+                        android:includeFontPadding="false"
+                        android:paddingEnd="10dp"
+                        android:textColor="?attr/colorPrimary"
+                        android:textSize="12sp"
+                        tools:text="0,0,0,0,0" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/btnHighLatitudeAdjustment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginEnd="5dp">
+
+                    <ImageView
+                        android:id="@+id/iv_hla_move"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:importantForAccessibility="no"
+                        android:src="@drawable/ic_move_forward"
+                         />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/mtv_hla_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_toStartOf="@+id/iv_hla_move"
+                        android:includeFontPadding="false"
+                        android:paddingEnd="10dp"
+                        android:text="@string/high_latitude_adjustment"
+                        android:textSize="14sp" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/mtv_hla_adjustments"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/mtv_hla_title"
+                        android:layout_toStartOf="@+id/iv_hla_move"
+                        android:includeFontPadding="false"
+                        android:paddingEnd="10dp"
+                        android:textColor="?attr/colorPrimary"
+                        android:textSize="12sp"
+                        tools:text="Twilight Angle" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/btnTimeFormat"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginEnd="5dp">
+
+                    <ImageView
+                        android:id="@+id/iv_tf_move"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:importantForAccessibility="no"
+                        android:src="@drawable/ic_move_forward"
+                         />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/mtv_tf_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_toStartOf="@+id/iv_tf_move"
+                        android:includeFontPadding="false"
+                        android:paddingEnd="10dp"
+                        android:text="@string/time_format"
+                        android:textSize="14sp" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/mtv_tf_time_format"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/mtv_tf_title"
+                        android:layout_toStartOf="@+id/iv_tf_move"
+                        android:includeFontPadding="false"
+                        android:paddingEnd="10dp"
+                        android:textColor="?attr/colorPrimary"
+                        android:textSize="12sp"
+                        tools:text="@string/tf_12_hour" />
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/permissions"
+                android:textAppearance="?attr/textAppearanceTitleMedium" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/bg_card"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="10dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingVertical="8dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/permission_location" />
+
+                    <TextView
+                        android:id="@+id/locationStatus"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnLocationPermission"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/grant_location" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingVertical="8dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/permission_notifications" />
+
+                    <TextView
+                        android:id="@+id/notificationStatus"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnNotificationPermission"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/grant_notifications" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingVertical="8dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/permission_exact_alarm" />
+
+                    <TextView
+                        android:id="@+id/exactAlarmStatus"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnExactAlarm"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/open_exact_alarm_settings" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingVertical="8dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/permission_battery" />
+
+                    <TextView
+                        android:id="@+id/batteryStatus"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnBatterySettings"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/open_battery_settings" />
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </ScrollView>
+</LinearLayout>
+

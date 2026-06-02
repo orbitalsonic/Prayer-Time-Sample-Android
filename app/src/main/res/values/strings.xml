@@ -26,4 +26,59 @@
     <string name="stop_azan">Stop Azan</string>
     <string name="location_unavailable">Location unavailable</string>
     <string name="location_resolving_address">Resolving address…</string>
+    <string name="prayer_settings">Prayer Settings</string>
+
+    <string name="prayer_time_convention">Prayer Time Conventions</string>
+    <string name="asr_time_calculation">Asr Time Calculation</string>
+    <string name="manual_correction">Manual Correction</string>
+    <string name="high_latitude_adjustment">High Latitude Adjustment</string>
+    <string name="time_format">Time Format</string>
+
+    <string name="ptc_mwl">Muslim World League (MWL)</string>
+    <string name="ptc_egypt">Egyptian General Authority of Survey</string>
+    <string name="ptc_karachi">University of Islamic Sciences, Karachi</string>
+    <string name="ptc_makkah">Umm Al-Qura University, Makkah</string>
+    <string name="ptc_dubai">Dubai</string>
+    <string name="ptc_moonsighting_committee">Moonsighting Committee</string>
+    <string name="ptc_isna">Islamic Society of North America (ISNA)</string>
+    <string name="ptc_kuwait">Kuwait</string>
+    <string name="ptc_qatar">Qatar</string>
+    <string name="ptc_singapore">Majlis Ugama Islam Singapura (Singapore)</string>
+    <string name="ptc_tehran">Institute of Geophysics, University of Tehran</string>
+    <string name="ptc_jafari">Jaffari (Ithna Ashari method)</string>
+    <string name="ptc_gulf_region">The Gulf Region</string>
+    <string name="ptc_france">Union Organization islamic de France</string>
+    <string name="ptc_turkey">Presidency of Religious Affairs, Turkey</string>
+    <string name="ptc_russia">Spiritual Administration of Muslims of Russia</string>
+    <string name="ptc_custom">Custom Angles</string>
+
+    <string name="ptc_mwl_angle">Fajr: 18.0°, Isha: 17.0°</string>
+    <string name="ptc_egypt_angle">Fajr: 19.5°, Isha: 17.5°</string>
+    <string name="ptc_karachi_angle">Fajr: 18.0°, Isha: 18.0°</string>
+    <string name="ptc_makkah_angle">Fajr: 18.5°, Isha: 90 Minutes</string>
+    <string name="ptc_dubai_angle">Fajr: 18.2°, Isha: 18.2°</string>
+    <string name="ptc_moonsighting_committee_angle">Fajr: 18.0°, Isha: 18.0°</string>
+    <string name="ptc_isna_angle">Fajr: 15.0°, Isha: 15.0°</string>
+    <string name="ptc_kuwait_angle">Fajr: 18.0°, Isha: 17.5°</string>
+    <string name="ptc_qatar_angle">Fajr: 18.0°, Isha: 90 minutes</string>
+    <string name="ptc_singapore_angle">Fajr: 20.0°, Isha: 18.0°</string>
+    <string name="ptc_tehran_angle">Fajr: 17.7°, Isha: 14.0°</string>
+    <string name="ptc_jafari_angle">Fajr: 16.0°, Isha: 14.0°</string>
+    <string name="ptc_gulf_region_angle">Fajr: 19.5°, Isha: 90 minutes</string>
+    <string name="ptc_france_angle">Fajr: 12.0°, Isha: 12.0°</string>
+    <string name="ptc_turkey_angle">Fajr: 18.0°, Isha: 17.0°</string>
+    <string name="ptc_russia_angle">Fajr: 16.0°, Isha: 15.0°</string>
+
+    <string name="hla_no_adjustment">No Adjustment</string>
+    <string name="hla_mid_night">Middle of The Night</string>
+    <string name="hla_one_seventh">Seventh of The Night</string>
+    <string name="hla_twilight_angle">Twilight Angle</string>
+
+    <string name="tf_12_hour">12-hour (5:00 AM)</string>
+    <string name="tf_12_hour_ns">12-hour without AM/PM (5:00)</string>
+    <string name="tf_24_hour">24-hour (17:00).</string>
+    <string name="tf_floating">Floating-point (5.5 for 5:30)</string>
+
+    <string name="atc_hanafi">Hanafi</string>
+    <string name="atc_shafi">Shafi</string>
 </resources>

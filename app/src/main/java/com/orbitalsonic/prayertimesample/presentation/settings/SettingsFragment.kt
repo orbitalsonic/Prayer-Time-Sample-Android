@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import com.orbitalsonic.prayertimesample.PrayerTimeApp
 import com.orbitalsonic.prayertimesample.R
 import com.orbitalsonic.prayertimesample.databinding.FragmentSettingsBinding
@@ -59,6 +60,11 @@ class SettingsFragment : Fragment() {
         binding.btnExactAlarm.setOnClickListener { openExactAlarmSettings() }
         binding.btnLocationPermission.setOnClickListener { requestLocation() }
         binding.btnNotificationPermission.setOnClickListener { requestNotification() }
+        binding.btnBack.setOnClickListener {
+            if (isAdded) {
+                findNavController().popBackStack()
+            }
+        }
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
