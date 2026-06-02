@@ -5,7 +5,8 @@ data class PrayerTimeModel(
     val timeLabel: String,
     val timeMillis: Long,
     val isNext: Boolean = false,
-    val isPassed: Boolean = false
+    val isPassed: Boolean = false,
+    val isNow: Boolean = false
 )
 
 data class PrayerDayTimes(

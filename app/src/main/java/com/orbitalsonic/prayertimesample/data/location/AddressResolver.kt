@@ -34,12 +34,9 @@ class AddressResolver(context: Context) {
     }
 
     private fun android.location.Address.toDisplayAddress(): String {
-        val line = getAddressLine(0)
-        if (!line.isNullOrBlank()) return line
         val city = locality ?: subAdminArea
-        val region = adminArea
         val country = countryName
-        return listOfNotNull(city, region, country)
+        return listOfNotNull(city, country)
             .filter { it.isNotBlank() }
             .distinct()
             .joinToString(", ")

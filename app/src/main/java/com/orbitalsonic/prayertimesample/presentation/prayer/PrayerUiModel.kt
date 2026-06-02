@@ -40,7 +40,8 @@ data class PrayerUiModel(
     val prayer: PrayerName,
     val iconRes: Int,
     val isNext: Boolean = false,
-    val isPassed: Boolean = false
+    val isPassed: Boolean = false,
+    val isNow: Boolean = false
 )
 
 fun buildPrayerUiModels(
@@ -60,7 +61,8 @@ fun buildPrayerUiModels(
             prayer = prayer,
             iconRes = prayer.iconRes,
             isNext = time?.isNext == true,
-            isPassed = time?.isPassed == true
+            isPassed = time?.isPassed == true,
+            isNow = time?.isNow == true
         )
     }
 }

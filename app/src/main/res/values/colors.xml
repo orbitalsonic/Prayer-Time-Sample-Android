@@ -1,7 +1,8 @@
 <resources>
     <color name="black">#000000</color>
     <color name="white">#FFFFFF</color>
-    <color name="prayer_next">#00AB6B</color>
+    <color name="prayer_next">#1565C0</color>
+    <color name="prayer_now">#00AB6B</color>
     <color name="prayer_passed">#777777</color>
     <color name="prayer_default">#31393C</color>
 </resources>

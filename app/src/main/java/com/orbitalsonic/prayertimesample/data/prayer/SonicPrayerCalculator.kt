@@ -105,10 +105,32 @@ class SonicPrayerCalculator(
             }
         }
         val nextIndex = mapped.indexOfFirst { !it.isPassed && it.timeMillis > 0 }.takeIf { it >= 0 }
+        val nowIndex = findCurrentPrayerIndex(mapped, now)
         val withNext = mapped.mapIndexed { index, model ->
-            model.copy(isNext = index == nextIndex)
+            model.copy(
+                isNext = index == nextIndex,
+                isNow = index == nowIndex
+            )
         }
         return PrayerDayTimes(dateMillis = dateMillis, prayers = withNext)
+    }
+
+    private fun findCurrentPrayerIndex(
+        prayers: List<PrayerTimeModel>,
+        nowMillis: Long
+    ): Int? {
+        val validIndices = prayers.indices.filter { prayers[it].timeMillis > 0L }
+        if (validIndices.isEmpty()) return null
+        for (pos in validIndices.indices) {
+            val currentIndex = validIndices[pos]
+            val current = prayers[currentIndex]
+            val nextIndex = validIndices.getOrNull(pos + 1)
+            val nextTime = nextIndex?.let { prayers[it].timeMillis } ?: Long.MAX_VALUE
+            if (nowMillis in current.timeMillis until nextTime) {
+                return currentIndex
+            }
+        }
+        return validIndices.lastOrNull()
     }
 
     private fun formatDisplayTime(timeMillis: Long): String {
