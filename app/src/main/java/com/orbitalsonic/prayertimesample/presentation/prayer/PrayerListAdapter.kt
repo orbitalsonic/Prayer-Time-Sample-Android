@@ -46,6 +46,11 @@ class PrayerListAdapter(
             val colorInt = ContextCompat.getColor(binding.root.context, color)
             binding.prayerName.setTextColor(colorInt)
             binding.prayerTime.setTextColor(colorInt)
+            val background = when {
+                item.isNext -> R.drawable.bg_prayer_now
+                else -> R.drawable.bg_prayer
+            }
+            binding.itemPrayer.background = ContextCompat.getDrawable(binding.root.context, background)
 
             binding.btnNotificationMode.setOnClickListener {
                 onNotificationModeClick(item.prayer)

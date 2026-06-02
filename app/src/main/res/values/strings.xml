@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Prayer Time Sample</string>
+    <string name="app_name">Prayer Time</string>
     <string name="prayer_times">Prayer Times</string>
     <string name="settings">Settings</string>
     <string name="refresh">Refresh</string>

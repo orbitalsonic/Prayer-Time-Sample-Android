@@ -27,8 +27,8 @@ enum class NotificationMode {
 
     fun iconRes(): Int = when (this) {
         DISABLED -> R.drawable.ic_notification_off
-        NOTIFICATION_ONLY -> R.drawable.ic_notification
-        AZAN -> R.drawable.ic_volume_up
+        NOTIFICATION_ONLY -> R.drawable.ic_notification_on
+        AZAN -> R.drawable.ic_notification_azan
     }
 }
 
