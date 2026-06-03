@@ -81,4 +81,14 @@
 
     <string name="atc_hanafi">Hanafi</string>
     <string name="atc_shafi">Shafi</string>
+    <string name="prayer_fajr_text">Fajr</string>
+    <string name="prayer_dhuhr_text">Dhuhr</string>
+    <string name="prayer_asr_text">Asr</string>
+    <string name="prayer_maghrib_text">Maghrib</string>
+    <string name="prayer_isha_text">Isha</string>
+    <string name="minute">minute</string>
+    <string name="minutes_format">%1$d minute</string>
+    <string name="cancel">Cancel</string>
+    <string name="change">Change</string>
+    <string name="angle_format">%1$.1f°</string>
 </resources>

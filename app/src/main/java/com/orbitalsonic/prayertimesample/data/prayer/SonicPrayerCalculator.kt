@@ -3,6 +3,7 @@ package com.orbitalsonic.prayertimesample.data.prayer
 import com.orbitalsonic.prayertimesample.domain.model.PrayerDayTimes
 import com.orbitalsonic.prayertimesample.domain.model.PrayerName
 import com.orbitalsonic.prayertimesample.domain.model.PrayerTimeModel
+import com.orbitalsonic.prayertimesample.data.local.PrayerPreferencesDataStore
 import com.orbitalsonic.sonicopt.enums.AsrJuristicMethod
 import com.orbitalsonic.sonicopt.enums.HighLatitudeAdjustment
 import com.orbitalsonic.sonicopt.enums.PrayerTimeConvention
@@ -18,6 +19,7 @@ import java.util.Locale
 import kotlin.coroutines.resume
 
 class SonicPrayerCalculator(
+    private val prayerPreferencesDataStore: PrayerPreferencesDataStore,
     private val prayerTimeManager: PrayerTimeManager = PrayerTimeManager()
 ) {
 
@@ -40,48 +42,63 @@ class SonicPrayerCalculator(
     }
 
     private suspend fun fetchToday(latitude: Double, longitude: Double): PrayerDayTimes? =
-        suspendCancellableCoroutine { cont ->
+        run {
+            val settings = loadRuntimeSettings()
+            suspendCancellableCoroutine { cont ->
             prayerTimeManager.fetchTodayPrayerTimes(
                 latitude = latitude,
                 longitude = longitude,
-                highLatitudeAdjustment = HighLatitudeAdjustment.NO_ADJUSTMENT,
-                asrJuristicMethod = AsrJuristicMethod.HANAFI,
-                prayerTimeConvention = PrayerTimeConvention.KARACHI,
-                timeFormat = TimeFormat.HOUR_24,
-                prayerManualCorrection = PrayerManualCorrection(),
-                prayerCustomAngle = PrayerCustomAngle()
+                highLatitudeAdjustment = settings.highLatitudeAdjustment,
+                asrJuristicMethod = settings.asrJuristicMethod,
+                prayerTimeConvention = settings.prayerTimeConvention,
+                timeFormat = settings.timeFormat,
+                prayerManualCorrection = settings.prayerManualCorrection,
+                prayerCustomAngle = settings.prayerCustomAngle
             ) { result ->
                 if (cont.isActive) {
-                    cont.resume(result.getOrNull()?.let { mapPrayerItem(it.date, it.prayerList) })
+                    cont.resume(
+                        result.getOrNull()?.let {
+                            mapPrayerItem(it.date, it.prayerList, settings.timeFormat)
+                        }
+                    )
                 }
             }
+        }
         }
 
     private suspend fun fetchSpecificDate(
         latitude: Double,
         longitude: Double,
         date: Date
-    ): PrayerDayTimes? = suspendCancellableCoroutine { cont ->
-        prayerTimeManager.fetchSpecificDatePrayerTimes(
-            latitude = latitude,
-            longitude = longitude,
-            date,
-            highLatitudeAdjustment = HighLatitudeAdjustment.NO_ADJUSTMENT,
-            asrJuristicMethod = AsrJuristicMethod.HANAFI,
-            prayerTimeConvention = PrayerTimeConvention.KARACHI,
-            timeFormat = TimeFormat.HOUR_24,
-            prayerManualCorrection = PrayerManualCorrection(),
-            prayerCustomAngle = PrayerCustomAngle()
-        ) { result ->
-            if (cont.isActive) {
-                cont.resume(result.getOrNull()?.let { mapPrayerItem(it.date, it.prayerList) })
+    ): PrayerDayTimes? {
+        val settings = loadRuntimeSettings()
+        return suspendCancellableCoroutine { cont ->
+            prayerTimeManager.fetchSpecificDatePrayerTimes(
+                latitude = latitude,
+                longitude = longitude,
+                date,
+                highLatitudeAdjustment = settings.highLatitudeAdjustment,
+                asrJuristicMethod = settings.asrJuristicMethod,
+                prayerTimeConvention = settings.prayerTimeConvention,
+                timeFormat = settings.timeFormat,
+                prayerManualCorrection = settings.prayerManualCorrection,
+                prayerCustomAngle = settings.prayerCustomAngle
+            ) { result ->
+                if (cont.isActive) {
+                    cont.resume(
+                        result.getOrNull()?.let {
+                            mapPrayerItem(it.date, it.prayerList, settings.timeFormat)
+                        }
+                    )
+                }
             }
         }
     }
 
     private fun mapPrayerItem(
         dateMillis: Long,
-        prayerList: List<com.orbitalsonic.sonicopt.models.PrayerTimes>
+        prayerList: List<com.orbitalsonic.sonicopt.models.PrayerTimes>,
+        timeFormat: TimeFormat
     ): PrayerDayTimes {
         val now = System.currentTimeMillis()
         val mapped = PrayerName.ordered.map { prayerName ->
@@ -91,7 +108,7 @@ class SonicPrayerCalculator(
             if (sonic != null) {
                 PrayerTimeModel(
                     name = prayerName,
-                    timeLabel = formatDisplayTime(sonic.prayerTimeMillis),
+                    timeLabel = formatPrayerTimeLabel(sonic.prayerTime, timeFormat, sonic.prayerTimeMillis),
                     timeMillis = sonic.prayerTimeMillis,
                     isPassed = sonic.prayerTimeMillis <= now
                 )
@@ -133,8 +150,55 @@ class SonicPrayerCalculator(
         return validIndices.lastOrNull()
     }
 
-    private fun formatDisplayTime(timeMillis: Long): String {
+    private fun formatPrayerTimeLabel(
+        libraryTime: String,
+        timeFormat: TimeFormat,
+        timeMillis: Long
+    ): String {
         if (timeMillis <= 0L) return "--:--"
-        return displayTimeFormat.format(Date(timeMillis)).uppercase(Locale.getDefault())
+        if (libraryTime.isNotBlank()) {
+            return if (timeFormat == TimeFormat.HOUR_12) {
+                libraryTime.uppercase(Locale.getDefault())
+            } else {
+                libraryTime
+            }
+        }
+        return formatDisplayTime(timeMillis, timeFormat)
     }
+
+    private fun formatDisplayTime(timeMillis: Long, timeFormat: TimeFormat): String {
+        if (timeMillis <= 0L) return "--:--"
+        return when (timeFormat) {
+            TimeFormat.HOUR_24 -> SimpleDateFormat("HH:mm", Locale.getDefault())
+                .format(Date(timeMillis))
+            TimeFormat.HOUR_12_NS -> SimpleDateFormat("hh:mm", Locale.getDefault())
+                .format(Date(timeMillis))
+            TimeFormat.FLOATING -> {
+                val calendar = Calendar.getInstance().apply { timeInMillis = timeMillis }
+                val hours = calendar.get(Calendar.HOUR_OF_DAY)
+                val minutes = calendar.get(Calendar.MINUTE)
+                "${hours + minutes / 60.0}"
+            }
+            else -> displayTimeFormat.format(Date(timeMillis)).uppercase(Locale.getDefault())
+        }
+    }
+
+    private data class PrayerRuntimeSettings(
+        val highLatitudeAdjustment: HighLatitudeAdjustment,
+        val asrJuristicMethod: AsrJuristicMethod,
+        val prayerTimeConvention: PrayerTimeConvention,
+        val timeFormat: TimeFormat,
+        val prayerManualCorrection: PrayerManualCorrection,
+        val prayerCustomAngle: PrayerCustomAngle
+    )
+
+    private suspend fun loadRuntimeSettings(): PrayerRuntimeSettings =
+        PrayerRuntimeSettings(
+            highLatitudeAdjustment = prayerPreferencesDataStore.getHighLatitudeAdjustment(),
+            asrJuristicMethod = prayerPreferencesDataStore.getAsrJuristicMethod(),
+            prayerTimeConvention = prayerPreferencesDataStore.getPrayerTimeConvention(),
+            timeFormat = prayerPreferencesDataStore.getTimeFormat(),
+            prayerManualCorrection = prayerPreferencesDataStore.getPrayerManualCorrection(),
+            prayerCustomAngle = prayerPreferencesDataStore.getPrayerCustomAngle()
+        )
 }

@@ -16,5 +16,31 @@
     <fragment
         android:id="@+id/settingsFragment"
         android:name="com.orbitalsonic.prayertimesample.presentation.settings.SettingsFragment"
-        android:label="@string/settings" />
+        android:label="@string/settings">
+        <action
+            android:id="@+id/action_settings_to_prayerConventionFragment"
+            app:destination="@id/prayerConventionFragment" />
+        <action
+            android:id="@+id/action_settings_to_manualCorrectionFragment"
+            app:destination="@id/manualCorrectionFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/prayerConventionFragment"
+        android:name="com.orbitalsonic.prayertimesample.presentation.settings.PrayerConventionFragment"
+        android:label="@string/prayer_time_convention">
+        <action
+            android:id="@+id/action_prayerConventionFragment_to_customAngleFragment"
+            app:destination="@id/customAngleFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/customAngleFragment"
+        android:name="com.orbitalsonic.prayertimesample.presentation.settings.CustomAngleFragment"
+        android:label="@string/ptc_custom" />
+
+    <fragment
+        android:id="@+id/manualCorrectionFragment"
+        android:name="com.orbitalsonic.prayertimesample.presentation.settings.ManualCorrectionFragment"
+        android:label="@string/manual_correction" />
 </navigation>

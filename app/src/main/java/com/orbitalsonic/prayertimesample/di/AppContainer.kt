@@ -31,23 +31,23 @@ import com.orbitalsonic.prayertimesample.presentation.settings.SettingsViewModel
 
 class AppContainer(private val application: Application) {
 
-    private val dataStore = PrayerPreferencesDataStore(application)
-    private val calculator = SonicPrayerCalculator()
+    val prayerPreferencesDataStore = PrayerPreferencesDataStore(application)
+    private val calculator = SonicPrayerCalculator(prayerPreferencesDataStore)
     private val addressResolver = AddressResolver(application)
     private val fusedLocation = FusedLocationDataSource(application, addressResolver)
 
     val azanPlayerManager: AzanPlayerManager by lazy { AzanPlayerManager(application) }
 
     val locationRepository: LocationRepository by lazy {
-        LocationRepositoryImpl(fusedLocation, dataStore, addressResolver)
+        LocationRepositoryImpl(fusedLocation, prayerPreferencesDataStore, addressResolver)
     }
 
     val notificationSettingsRepository: NotificationSettingsRepository by lazy {
-        NotificationSettingsRepositoryImpl(dataStore)
+        NotificationSettingsRepositoryImpl(prayerPreferencesDataStore)
     }
 
     val prayerTimeRepository: PrayerTimeRepository by lazy {
-        PrayerTimeRepositoryImpl(calculator, locationRepository, dataStore)
+        PrayerTimeRepositoryImpl(calculator, locationRepository, prayerPreferencesDataStore)
     }
 
     val alarmScheduler: AlarmScheduler by lazy {
