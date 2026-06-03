@@ -8,6 +8,7 @@ import android.os.Build
 import com.orbitalsonic.prayertimesample.domain.model.PrayerName
 import com.orbitalsonic.prayertimesample.domain.model.ScheduledPrayerAlarm
 import com.orbitalsonic.prayertimesample.domain.repository.AlarmScheduler
+import com.orbitalsonic.prayertimesample.domain.repository.LocationRepository
 import com.orbitalsonic.prayertimesample.domain.repository.NotificationSettingsRepository
 import com.orbitalsonic.prayertimesample.domain.repository.PrayerTimeRepository
 import com.orbitalsonic.prayertimesample.domain.usecase.PrayerAlarmPlanner
@@ -16,6 +17,7 @@ import com.orbitalsonic.prayertimesample.receiver.PrayerAlarmReceiver
 class AlarmSchedulerImpl(
     private val context: Context,
     private val prayerTimeRepository: PrayerTimeRepository,
+    private val locationRepository: LocationRepository,
     private val settingsRepository: NotificationSettingsRepository
 ) : AlarmScheduler {
 
@@ -31,6 +33,8 @@ class AlarmSchedulerImpl(
             putExtra(PrayerAlarmReceiver.EXTRA_PRAYER_NAME, alarm.prayer.name)
             putExtra(PrayerAlarmReceiver.EXTRA_TRIGGER_AT, alarm.triggerAtMillis)
             putExtra(PrayerAlarmReceiver.EXTRA_DAY_OFFSET, alarm.dayOffset)
+            putExtra(PrayerAlarmReceiver.EXTRA_PRAYER_TIME, alarm.timeLabel)
+            putExtra(PrayerAlarmReceiver.EXTRA_LOCATION_MESSAGE, alarm.locationMessage)
         }
         val pendingIntent = PendingIntent.getBroadcast(
             context,
@@ -73,7 +77,16 @@ class AlarmSchedulerImpl(
         val today = prayerTimeRepository.getTodayPrayerTimes()
         val tomorrow = prayerTimeRepository.getTomorrowPrayerTimes()
         val settings = settingsRepository.getSettings()
-        val alarms = PrayerAlarmPlanner.nextAlarms(now, today, tomorrow, settings)
+        val locationMessage = locationRepository.getCachedLocation()
+            ?.notificationMessage()
+            .orEmpty()
+        val alarms = PrayerAlarmPlanner.nextAlarms(
+            now,
+            today,
+            tomorrow,
+            settings,
+            locationMessage = locationMessage
+        )
         alarms.forEach { schedulePrayer(it) }
     }
 

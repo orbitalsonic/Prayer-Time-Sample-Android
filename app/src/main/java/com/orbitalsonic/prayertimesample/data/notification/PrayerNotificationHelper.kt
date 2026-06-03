@@ -48,6 +48,7 @@ object PrayerNotificationHelper {
         context: Context,
         prayer: PrayerName,
         timeLabel: String,
+        locationMessage: String,
         mode: PrayerNotificationMode
     ): Notification {
         ensureChannels(context)
@@ -82,10 +83,19 @@ object PrayerNotificationHelper {
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
 
+        val title = context.getString(
+            R.string.prayer_notification_title,
+            prayer.displayName,
+            timeLabel.ifBlank { "--:--" }
+        )
+        val body = locationMessage.ifBlank {
+            context.getString(R.string.location_unavailable)
+        }
+
         val builder = NotificationCompat.Builder(context, channel)
             .setSmallIcon(R.drawable.ic_notification_prayer)
-            .setContentTitle(context.getString(R.string.prayer_notification_title, prayer.displayName))
-            .setContentText(context.getString(R.string.prayer_notification_body, timeLabel))
+            .setContentTitle(title)
+            .setContentText(body)
             .setContentIntent(contentIntent)
             .setAutoCancel(true)
             .setDeleteIntent(dismissPending)

@@ -10,4 +10,6 @@ data class LocationInfo(
 
     fun displayAddress(fallback: String): String =
         address.takeIf { it.isNotBlank() } ?: fallback
+
+    fun notificationMessage(): String = address
 }

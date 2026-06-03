@@ -10,4 +10,6 @@ class GetPrayerTimesUseCase(
     operator fun invoke(): Flow<PrayerDayTimes?> = prayerTimeRepository.observeTodayPrayerTimes()
 
     suspend fun today(): PrayerDayTimes? = prayerTimeRepository.getTodayPrayerTimes()
+
+    suspend fun tomorrow(): PrayerDayTimes? = prayerTimeRepository.getTomorrowPrayerTimes()
 }

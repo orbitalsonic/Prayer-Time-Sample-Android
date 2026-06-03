@@ -50,7 +50,12 @@ class AppContainer(private val application: Application) {
     }
 
     val alarmScheduler: AlarmScheduler by lazy {
-        AlarmSchedulerImpl(application, prayerTimeRepository, notificationSettingsRepository)
+        AlarmSchedulerImpl(
+            application,
+            prayerTimeRepository,
+            locationRepository,
+            notificationSettingsRepository
+        )
     }
 
     fun permissionRepository(activity: FragmentActivity): PermissionRepository =

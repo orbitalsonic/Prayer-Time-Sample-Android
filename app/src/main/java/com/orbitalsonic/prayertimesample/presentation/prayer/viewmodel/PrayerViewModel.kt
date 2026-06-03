@@ -1,7 +1,9 @@
 package com.orbitalsonic.prayertimesample.presentation.prayer.viewmodel
 
 import androidx.lifecycle.viewModelScope
+import com.orbitalsonic.prayertimesample.domain.model.PrayerDayTimes
 import com.orbitalsonic.prayertimesample.domain.model.PrayerName
+import com.orbitalsonic.prayertimesample.domain.model.PrayerTimeModel
 import com.orbitalsonic.prayertimesample.domain.usecase.CyclePrayerNotificationModeUseCase
 import com.orbitalsonic.prayertimesample.domain.usecase.GetPrayerTimesUseCase
 import com.orbitalsonic.prayertimesample.domain.usecase.ObserveLocationUseCase
@@ -48,9 +50,10 @@ class PrayerViewModel(
                     setState { copy(isLoading = true) }
                     return@collect
                 }
+                val tomorrow = getPrayerTimesUseCase.tomorrow()
                 val modeMap = PrayerName.ordered.associateWith { settings.modeFor(it) }
                 val uiPrayers = buildPrayerUiModels(times.prayers, modeMap)
-                val next = times.prayers.firstOrNull { it.isNext }
+                val nextTarget = resolveNextPrayerTarget(times, tomorrow)
                 setState {
                     copy(
                         isLoading = false,
@@ -59,11 +62,11 @@ class PrayerViewModel(
                         ) ?: locationUnavailableLabel,
                         dateLabel = dateFormat.format(Date(times.dateMillis)),
                         prayers = uiPrayers,
-                        nextPrayerName = next?.name?.displayName.orEmpty(),
+                        nextPrayerName = nextTarget?.name?.displayName.orEmpty(),
                         errorMessage = null
                     )
                 }
-                startCountdown(next?.timeMillis)
+                startCountdown(nextTarget?.timeMillis)
             }
         }
     }
@@ -111,17 +114,35 @@ class PrayerViewModel(
         countdownJob?.cancel()
         if (targetMillis == null || targetMillis <= 0L) return
         countdownJob = viewModelScope.launch {
+            var refreshTriggered = false
             while (isActive) {
                 val diff = targetMillis - System.currentTimeMillis()
-                val text = if (diff <= 0) {
-                    "00:00:00"
+                if (diff <= 0) {
+                    setState { copy(countdownText = "00:00:00") }
+                    if (!refreshTriggered) {
+                        refreshTriggered = true
+                        refreshPrayerTimesUseCase(refreshLocation = false)
+                    }
+                    delay(1000)
                 } else {
-                    formatCountdown(diff)
+                    setState { copy(countdownText = formatCountdown(diff)) }
+                    delay(1000)
                 }
-                setState { copy(countdownText = text) }
-                delay(1000)
             }
         }
+    }
+
+    private fun resolveNextPrayerTarget(
+        times: PrayerDayTimes,
+        tomorrow: PrayerDayTimes?
+    ): PrayerTimeModel? {
+        times.prayers.firstOrNull { it.isNext }?.let { return it }
+        val now = System.currentTimeMillis()
+        val tomorrowFajr = tomorrow?.find(PrayerName.FAJR)
+        if (tomorrowFajr != null && tomorrowFajr.timeMillis > now) {
+            return tomorrowFajr
+        }
+        return null
     }
 
     private fun formatCountdown(millis: Long): String {

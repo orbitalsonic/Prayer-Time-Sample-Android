@@ -21,8 +21,8 @@
     <string name="notification_channel_prayer_desc">Prayer time alerts</string>
     <string name="notification_channel_azan">Azan</string>
     <string name="notification_channel_azan_desc">Azan playback notifications</string>
-    <string name="prayer_notification_title">%1$s prayer time</string>
-    <string name="prayer_notification_body">It is %1$s</string>
+    <string name="prayer_notification_title">%1$s at %2$s</string>
+    <string name="prayer_notification_body">%1$s</string>
     <string name="stop_azan">Stop Azan</string>
     <string name="location_unavailable">Location unavailable</string>
     <string name="location_resolving_address">Resolving address…</string>

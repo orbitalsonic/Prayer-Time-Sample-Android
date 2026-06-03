@@ -17,6 +17,7 @@ object PrayerAlarmPlanner {
         today: PrayerDayTimes?,
         tomorrow: PrayerDayTimes?,
         settings: NotificationSettings,
+        locationMessage: String = "",
         limit: Int = MAX_ACTIVE_ALARMS
     ): List<ScheduledPrayerAlarm> {
         val candidates = mutableListOf<Pair<com.orbitalsonic.prayertimesample.domain.model.PrayerTimeModel, Int>>()
@@ -32,7 +33,9 @@ object PrayerAlarmPlanner {
                 ScheduledPrayerAlarm(
                     prayer = prayer.name,
                     triggerAtMillis = prayer.timeMillis,
-                    dayOffset = dayOffset
+                    dayOffset = dayOffset,
+                    timeLabel = prayer.timeLabel,
+                    locationMessage = locationMessage
                 )
             }
     }
@@ -42,9 +45,17 @@ object PrayerAlarmPlanner {
         nowMillis: Long,
         today: PrayerDayTimes?,
         tomorrow: PrayerDayTimes?,
-        settings: NotificationSettings
+        settings: NotificationSettings,
+        locationMessage: String = ""
     ): ScheduledPrayerAlarm? {
-        val all = nextAlarms(nowMillis, today, tomorrow, settings, limit = 12)
+        val all = nextAlarms(
+            nowMillis,
+            today,
+            tomorrow,
+            settings,
+            locationMessage = locationMessage,
+            limit = 12
+        )
         val order = PrayerName.entries
         val triggeredIndex = order.indexOf(triggered)
         return all.firstOrNull { alarm ->

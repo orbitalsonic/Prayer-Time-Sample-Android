@@ -54,8 +54,7 @@ class LocationRepositoryImpl(
     }
 
     private suspend fun ensureAddress(location: LocationInfo): LocationInfo {
-        if (location.address.isNotBlank()) return location
-        if (!location.isValid) return location
+        if (location.address.isNotBlank() || !location.isValid) return location
         val address = addressResolver.resolve(location.latitude, location.longitude).orEmpty()
         return location.copy(address = address)
     }
