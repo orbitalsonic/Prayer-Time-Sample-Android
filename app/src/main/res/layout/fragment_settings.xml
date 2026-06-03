@@ -96,7 +96,8 @@
                         android:includeFontPadding="false"
                         android:paddingEnd="10dp"
                         android:text="@string/prayer_time_convention"
-                        android:textSize="14sp" />
+                        android:textAppearance="?attr/textAppearanceTitleSmall"
+                        />
 
                     <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/mtv_ptc_organization"
@@ -106,8 +107,9 @@
                         android:layout_toStartOf="@+id/iv_ptc_move"
                         android:includeFontPadding="false"
                         android:paddingEnd="10dp"
-                        android:textColor="?attr/colorPrimary"
-                        android:textSize="12sp"
+                        android:layout_marginTop="4dp"
+                        android:textAppearance="?attr/textAppearanceBodySmall"
+                        android:textColor="?android:attr/textColorSecondary"
                         tools:text="University of Islamic Sciences, Karachi" />
 
                 </RelativeLayout>
@@ -127,7 +129,7 @@
                         android:includeFontPadding="false"
                         android:paddingEnd="10dp"
                         android:text="@string/asr_time_calculation"
-                        android:textSize="14sp" />
+                        android:textAppearance="?attr/textAppearanceTitleSmall" />
 
                     <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/mtv_atc_juristic_method"
@@ -137,8 +139,9 @@
                         android:layout_toStartOf="@+id/iv_atc_move"
                         android:includeFontPadding="false"
                         android:paddingEnd="10dp"
-                        android:textColor="?attr/colorPrimary"
-                        android:textSize="12sp"
+                        android:layout_marginTop="4dp"
+                        android:textAppearance="?attr/textAppearanceBodySmall"
+                        android:textColor="?android:attr/textColorSecondary"
                         tools:text="Hanafi" />
 
                     <ImageView
@@ -180,7 +183,7 @@
                         android:includeFontPadding="false"
                         android:paddingEnd="10dp"
                         android:text="@string/manual_correction"
-                        android:textSize="14sp" />
+                        android:textAppearance="?attr/textAppearanceTitleSmall" />
 
                     <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/mtv_manual_correction"
@@ -190,8 +193,9 @@
                         android:layout_toStartOf="@+id/iv_mc_move"
                         android:includeFontPadding="false"
                         android:paddingEnd="10dp"
-                        android:textColor="?attr/colorPrimary"
-                        android:textSize="12sp"
+                        android:layout_marginTop="4dp"
+                        android:textAppearance="?attr/textAppearanceBodySmall"
+                        android:textColor="?android:attr/textColorSecondary"
                         tools:text="0,0,0,0,0" />
 
                 </RelativeLayout>
@@ -222,7 +226,7 @@
                         android:includeFontPadding="false"
                         android:paddingEnd="10dp"
                         android:text="@string/high_latitude_adjustment"
-                        android:textSize="14sp" />
+                        android:textAppearance="?attr/textAppearanceTitleSmall" />
 
                     <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/mtv_hla_adjustments"
@@ -232,8 +236,9 @@
                         android:layout_toStartOf="@+id/iv_hla_move"
                         android:includeFontPadding="false"
                         android:paddingEnd="10dp"
-                        android:textColor="?attr/colorPrimary"
-                        android:textSize="12sp"
+                        android:layout_marginTop="4dp"
+                        android:textAppearance="?attr/textAppearanceBodySmall"
+                        android:textColor="?android:attr/textColorSecondary"
                         tools:text="Twilight Angle" />
 
                 </RelativeLayout>
@@ -264,7 +269,7 @@
                         android:includeFontPadding="false"
                         android:paddingEnd="10dp"
                         android:text="@string/time_format"
-                        android:textSize="14sp" />
+                        android:textAppearance="?attr/textAppearanceTitleSmall" />
 
                     <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/mtv_tf_time_format"
@@ -274,8 +279,9 @@
                         android:layout_toStartOf="@+id/iv_tf_move"
                         android:includeFontPadding="false"
                         android:paddingEnd="10dp"
-                        android:textColor="?attr/colorPrimary"
-                        android:textSize="12sp"
+                        android:layout_marginTop="4dp"
+                        android:textAppearance="?attr/textAppearanceBodySmall"
+                        android:textColor="?android:attr/textColorSecondary"
                         tools:text="@string/tf_12_hour" />
 
                 </RelativeLayout>
