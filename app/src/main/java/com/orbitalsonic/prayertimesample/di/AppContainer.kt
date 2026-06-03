@@ -26,6 +26,7 @@ import com.orbitalsonic.prayertimesample.domain.usecase.SchedulePrayerAlarmsUseC
 import com.orbitalsonic.prayertimesample.R
 import com.orbitalsonic.prayertimesample.presentation.location.LocationViewModel
 import com.orbitalsonic.prayertimesample.presentation.prayer.viewmodel.PrayerViewModel
+import com.orbitalsonic.prayertimesample.presentation.settings.permission.PermissionStateChecker
 import com.orbitalsonic.prayertimesample.presentation.settings.viewmodel.SettingsViewModel
 
 class AppContainer(private val application: Application) {
@@ -95,7 +96,7 @@ class AppContainer(private val application: Application) {
     )
 
     fun settingsViewModel(activity: FragmentActivity): SettingsViewModel = SettingsViewModel(
-        permissionRepository(activity)
+        PermissionStateChecker(permissionRepository(activity))
     )
 
     fun locationViewModel(): LocationViewModel = LocationViewModel(

@@ -1,16 +1,9 @@
 package com.orbitalsonic.prayertimesample.presentation.settings.contract
 
-import com.orbitalsonic.prayertimesample.domain.model.PermissionStatus
-
-data class PermissionRow(
-    val title: String,
-    val status: PermissionStatus,
-    val actionLabel: String
-)
+import com.orbitalsonic.prayertimesample.presentation.settings.model.PermissionItem
 
 data class SettingsState(
-    val permissionRows: List<PermissionRow> = emptyList(),
-    val batteryExempt: Boolean = false
+    val permissionItems: List<PermissionItem> = emptyList()
 )
 
 sealed interface SettingsIntent {

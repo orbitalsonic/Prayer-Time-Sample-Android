@@ -40,12 +40,22 @@ class PermissionRepositoryImpl(
         return pm.isIgnoringBatteryOptimizations(context.packageName)
     }
 
+    override fun isLocationPermanentlyDenied(): Boolean =
+        locationStatus() != PermissionStatus.GRANTED &&
+            !shouldShowRationale(Manifest.permission.ACCESS_FINE_LOCATION) &&
+            !shouldShowRationale(Manifest.permission.ACCESS_COARSE_LOCATION)
+
+    override fun isNotificationPermanentlyDenied(): Boolean {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) return false
+        return notificationStatus() != PermissionStatus.GRANTED &&
+            !shouldShowRationale(Manifest.permission.POST_NOTIFICATIONS)
+    }
+
     private fun permissionStatus(vararg permissions: String): PermissionStatus {
         val granted = permissions.any {
             ContextCompat.checkSelfPermission(context, it) == PackageManager.PERMISSION_GRANTED
         }
         if (granted) return PermissionStatus.GRANTED
-        val permanentlyDenied = permissions.none { shouldShowRationale(it) }
-        return if (permanentlyDenied) PermissionStatus.PERMANENTLY_DENIED else PermissionStatus.DENIED
+        return PermissionStatus.DENIED
     }
 }

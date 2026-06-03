@@ -1,15 +1,13 @@
 package com.orbitalsonic.prayertimesample.presentation.settings.viewmodel
 
-import com.orbitalsonic.prayertimesample.domain.model.PermissionStatus
-import com.orbitalsonic.prayertimesample.domain.repository.PermissionRepository
 import com.orbitalsonic.prayertimesample.presentation.common.MviViewModel
-import com.orbitalsonic.prayertimesample.presentation.settings.contract.PermissionRow
 import com.orbitalsonic.prayertimesample.presentation.settings.contract.SettingsEffect
 import com.orbitalsonic.prayertimesample.presentation.settings.contract.SettingsIntent
 import com.orbitalsonic.prayertimesample.presentation.settings.contract.SettingsState
+import com.orbitalsonic.prayertimesample.presentation.settings.permission.PermissionStateChecker
 
 class SettingsViewModel(
-    private val permissionRepository: PermissionRepository
+    private val permissionStateChecker: PermissionStateChecker
 ) : MviViewModel<SettingsIntent, SettingsState, SettingsEffect>(SettingsState()) {
 
     init {
@@ -24,41 +22,7 @@ class SettingsViewModel(
 
     private fun refreshPermissions() {
         setState {
-            copy(
-                permissionRows = buildPermissionRows(),
-                batteryExempt = permissionRepository.isBatteryOptimizationExempt()
-            )
+            copy(permissionItems = permissionStateChecker.buildPermissionItems())
         }
     }
-
-    private fun buildPermissionRows(): List<PermissionRow> = listOf(
-        PermissionRow(
-            title = "Location",
-            status = permissionRepository.locationStatus(),
-            actionLabel = "Grant"
-        ),
-        PermissionRow(
-            title = "Notifications",
-            status = permissionRepository.notificationStatus(),
-            actionLabel = "Grant"
-        ),
-        PermissionRow(
-            title = "Exact alarms",
-            status = if (permissionRepository.canScheduleExactAlarms()) {
-                PermissionStatus.GRANTED
-            } else {
-                PermissionStatus.DENIED
-            },
-            actionLabel = "Settings"
-        ),
-        PermissionRow(
-            title = "Battery optimization",
-            status = if (permissionRepository.isBatteryOptimizationExempt()) {
-                PermissionStatus.GRANTED
-            } else {
-                PermissionStatus.DENIED
-            },
-            actionLabel = "Exempt"
-        )
-    )
 }

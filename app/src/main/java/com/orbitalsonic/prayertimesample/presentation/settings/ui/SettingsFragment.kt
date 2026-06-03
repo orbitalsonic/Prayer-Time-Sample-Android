@@ -1,28 +1,26 @@
 package com.orbitalsonic.prayertimesample.presentation.settings.ui
 
 import android.Manifest
-import android.content.Intent
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.orbitalsonic.prayertimesample.PrayerTimeApp
 import com.orbitalsonic.prayertimesample.R
 import com.orbitalsonic.prayertimesample.databinding.FragmentSettingsBinding
-import com.orbitalsonic.prayertimesample.domain.model.PermissionStatus
+import com.orbitalsonic.prayertimesample.presentation.settings.adapters.PermissionListAdapter
 import com.orbitalsonic.prayertimesample.presentation.settings.contract.SettingsIntent
 import com.orbitalsonic.prayertimesample.presentation.settings.contract.SettingsState
+import com.orbitalsonic.prayertimesample.presentation.settings.permission.PermissionHandler
 import com.orbitalsonic.prayertimesample.presentation.settings.viewmodel.SettingsViewModel
 import com.orbitalsonic.sonicopt.enums.AsrJuristicMethod
 import com.orbitalsonic.sonicopt.enums.HighLatitudeAdjustment
@@ -41,21 +39,27 @@ class SettingsFragment : Fragment() {
     }
 
     private val viewModel: SettingsViewModel by lazy {
-        (requireActivity().application as PrayerTimeApp)
-            .container
-            .settingsViewModel(requireActivity())
+        appContainer.settingsViewModel(requireActivity())
+    }
+
+    private lateinit var permissionHandler: PermissionHandler
+
+    private val permissionAdapter = PermissionListAdapter { item ->
+        permissionHandler.handlePermissionTap(item)
     }
 
     private val notificationPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
-    ) {
-        viewModel.onIntent(SettingsIntent.RefreshPermissions)
+    ) { granted ->
+        permissionHandler.onNotificationPermissionResult(granted)
     }
 
     private val locationPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()
-    ) {
-        viewModel.onIntent(SettingsIntent.RefreshPermissions)
+    ) { results ->
+        val granted = results[Manifest.permission.ACCESS_FINE_LOCATION] == true ||
+            results[Manifest.permission.ACCESS_COARSE_LOCATION] == true
+        permissionHandler.onLocationPermissionResult(granted)
     }
 
     override fun onCreateView(
@@ -69,10 +73,19 @@ class SettingsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.btnBatterySettings.setOnClickListener { openBatterySettings() }
-        binding.btnExactAlarm.setOnClickListener { openExactAlarmSettings() }
-        binding.btnLocationPermission.setOnClickListener { requestLocation() }
-        binding.btnNotificationPermission.setOnClickListener { requestNotification() }
+
+        permissionHandler = PermissionHandler(
+            fragment = this,
+            permissionRepository = appContainer.permissionRepository(requireActivity()),
+            locationPermissionLauncher = locationPermissionLauncher,
+            notificationPermissionLauncher = notificationPermissionLauncher,
+            onPermissionsChanged = { viewModel.onIntent(SettingsIntent.RefreshPermissions) }
+        )
+
+        binding.permissionsRecycler.layoutManager = LinearLayoutManager(requireContext())
+        binding.permissionsRecycler.adapter = permissionAdapter
+        binding.permissionsRecycler.itemAnimator = null
+
         binding.btnBack.setOnClickListener {
             if (isAdded) {
                 findNavController().popBackStack()
@@ -91,54 +104,7 @@ class SettingsFragment : Fragment() {
     }
 
     private fun render(state: SettingsState) {
-        binding.batteryStatus.text = if (state.batteryExempt) {
-            getString(R.string.status_granted)
-        } else {
-            getString(R.string.status_denied)
-        }
-        renderPermissionStatus(binding.locationStatus, state.permissionRows.getOrNull(0)?.status)
-        renderPermissionStatus(binding.notificationStatus, state.permissionRows.getOrNull(1)?.status)
-        renderPermissionStatus(binding.exactAlarmStatus, state.permissionRows.getOrNull(2)?.status)
-    }
-
-    private fun renderPermissionStatus(
-        view: TextView,
-        status: PermissionStatus?
-    ) {
-        view.text = when (status) {
-            PermissionStatus.GRANTED -> getString(R.string.status_granted)
-            PermissionStatus.PERMANENTLY_DENIED -> getString(R.string.status_permanently_denied)
-            PermissionStatus.DENIED, null -> getString(R.string.status_denied)
-        }
-    }
-
-    private fun requestLocation() {
-        locationPermissionLauncher.launch(
-            arrayOf(
-                Manifest.permission.ACCESS_FINE_LOCATION,
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            )
-        )
-    }
-
-    private fun requestNotification() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            notificationPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
-        } else {
-            Toast.makeText(requireContext(), R.string.status_granted, Toast.LENGTH_SHORT).show()
-        }
-    }
-
-    private fun openExactAlarmSettings() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            startActivity(Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM).apply {
-                data = Uri.parse("package:${requireContext().packageName}")
-            })
-        }
-    }
-
-    private fun openBatterySettings() {
-        startActivity(Intent(Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS))
+        permissionAdapter.submitList(state.permissionItems)
     }
 
     private fun setupPrayerSettingClicks() {
@@ -240,6 +206,7 @@ class SettingsFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
+        permissionHandler.onResume()
         viewModel.onIntent(SettingsIntent.RefreshPermissions)
         viewLifecycleOwner.lifecycleScope.launch {
             refreshPrayerSettingSummary()

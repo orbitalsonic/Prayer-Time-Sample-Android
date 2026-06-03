@@ -7,4 +7,6 @@ interface PermissionRepository {
     fun notificationStatus(): PermissionStatus
     fun canScheduleExactAlarms(): Boolean
     fun isBatteryOptimizationExempt(): Boolean
+    fun isLocationPermanentlyDenied(): Boolean
+    fun isNotificationPermanentlyDenied(): Boolean
 }
