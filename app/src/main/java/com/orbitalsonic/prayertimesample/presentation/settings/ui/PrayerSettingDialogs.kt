@@ -1,6 +1,7 @@
-package com.orbitalsonic.prayertimesample.presentation.settings
+package com.orbitalsonic.prayertimesample.presentation.settings.ui
 
 import android.app.AlertDialog
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.orbitalsonic.prayertimesample.R
@@ -192,7 +193,7 @@ class PrayerSettingDialogs {
         renderToggle(binding.btnFloating, selected == TimeFormat.FLOATING)
     }
 
-    private fun renderToggle(view: android.widget.TextView, selected: Boolean) {
+    private fun renderToggle(view: TextView, selected: Boolean) {
         val context = view.context
         if (selected) {
             view.setBackgroundResource(R.drawable.bg_btn_prayer_setting_on)

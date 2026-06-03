@@ -1,8 +1,12 @@
-package com.orbitalsonic.prayertimesample.presentation.settings
+package com.orbitalsonic.prayertimesample.presentation.settings.viewmodel
 
 import com.orbitalsonic.prayertimesample.domain.model.PermissionStatus
 import com.orbitalsonic.prayertimesample.domain.repository.PermissionRepository
 import com.orbitalsonic.prayertimesample.presentation.common.MviViewModel
+import com.orbitalsonic.prayertimesample.presentation.settings.contract.PermissionRow
+import com.orbitalsonic.prayertimesample.presentation.settings.contract.SettingsEffect
+import com.orbitalsonic.prayertimesample.presentation.settings.contract.SettingsIntent
+import com.orbitalsonic.prayertimesample.presentation.settings.contract.SettingsState
 
 class SettingsViewModel(
     private val permissionRepository: PermissionRepository

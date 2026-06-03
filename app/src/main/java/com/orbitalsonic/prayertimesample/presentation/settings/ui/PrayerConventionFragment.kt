@@ -1,4 +1,4 @@
-package com.orbitalsonic.prayertimesample.presentation.settings
+package com.orbitalsonic.prayertimesample.presentation.settings.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,6 +10,8 @@ import androidx.navigation.fragment.findNavController
 import com.orbitalsonic.prayertimesample.PrayerTimeApp
 import com.orbitalsonic.prayertimesample.R
 import com.orbitalsonic.prayertimesample.databinding.FragmentPrayerConventionBinding
+import com.orbitalsonic.prayertimesample.presentation.settings.adapters.ConventionAdapter
+import com.orbitalsonic.prayertimesample.presentation.settings.model.ConventionItem
 import com.orbitalsonic.sonicopt.enums.PrayerTimeConvention
 import kotlinx.coroutines.launch
 
@@ -91,7 +93,8 @@ class PrayerConventionFragment : Fragment() {
             val customAngle = store.getPrayerCustomAngle()
             val items = ptcOrganizationNames.map { (convention, title) ->
                 val subtitle = if (convention == PrayerTimeConvention.CUSTOM) {
-                    "${getString(R.string.prayer_fajr_text)}: ${customAngle.fajrAngle}°, ${getString(R.string.prayer_isha_text)}: ${customAngle.ishaAngle}°"
+                    "${getString(R.string.prayer_fajr_text)}: ${customAngle.fajrAngle}°, ${getString(
+                        R.string.prayer_isha_text)}: ${customAngle.ishaAngle}°"
                 } else {
                     ptcOrganizationAngles[convention].orEmpty()
                 }

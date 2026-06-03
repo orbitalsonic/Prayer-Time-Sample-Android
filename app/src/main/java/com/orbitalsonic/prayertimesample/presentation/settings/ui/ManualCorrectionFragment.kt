@@ -1,4 +1,4 @@
-package com.orbitalsonic.prayertimesample.presentation.settings
+package com.orbitalsonic.prayertimesample.presentation.settings.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater

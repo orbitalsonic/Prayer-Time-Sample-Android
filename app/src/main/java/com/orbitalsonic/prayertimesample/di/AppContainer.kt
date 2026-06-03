@@ -7,7 +7,6 @@ import com.orbitalsonic.prayertimesample.data.local.PrayerPreferencesDataStore
 import com.orbitalsonic.prayertimesample.data.location.AddressResolver
 import com.orbitalsonic.prayertimesample.data.location.FusedLocationDataSource
 import com.orbitalsonic.prayertimesample.data.notification.AzanPlayerManager
-import com.orbitalsonic.prayertimesample.data.notification.PrayerNotificationHelper
 import com.orbitalsonic.prayertimesample.data.prayer.SonicPrayerCalculator
 import com.orbitalsonic.prayertimesample.data.repository.LocationRepositoryImpl
 import com.orbitalsonic.prayertimesample.data.repository.NotificationSettingsRepositoryImpl
@@ -26,8 +25,8 @@ import com.orbitalsonic.prayertimesample.domain.usecase.RefreshPrayerTimesUseCas
 import com.orbitalsonic.prayertimesample.domain.usecase.SchedulePrayerAlarmsUseCase
 import com.orbitalsonic.prayertimesample.R
 import com.orbitalsonic.prayertimesample.presentation.location.LocationViewModel
-import com.orbitalsonic.prayertimesample.presentation.prayer.PrayerViewModel
-import com.orbitalsonic.prayertimesample.presentation.settings.SettingsViewModel
+import com.orbitalsonic.prayertimesample.presentation.prayer.viewmodel.PrayerViewModel
+import com.orbitalsonic.prayertimesample.presentation.settings.viewmodel.SettingsViewModel
 
 class AppContainer(private val application: Application) {
 

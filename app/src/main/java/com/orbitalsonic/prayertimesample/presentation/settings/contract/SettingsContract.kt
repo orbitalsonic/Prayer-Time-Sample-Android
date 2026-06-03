@@ -1,4 +1,4 @@
-package com.orbitalsonic.prayertimesample.presentation.settings
+package com.orbitalsonic.prayertimesample.presentation.settings.contract
 
 import com.orbitalsonic.prayertimesample.domain.model.PermissionStatus
 

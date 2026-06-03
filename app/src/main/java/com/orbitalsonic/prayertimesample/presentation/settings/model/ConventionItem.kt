@@ -1,4 +1,4 @@
-package com.orbitalsonic.prayertimesample.presentation.settings
+package com.orbitalsonic.prayertimesample.presentation.settings.model
 
 import com.orbitalsonic.sonicopt.enums.PrayerTimeConvention
 

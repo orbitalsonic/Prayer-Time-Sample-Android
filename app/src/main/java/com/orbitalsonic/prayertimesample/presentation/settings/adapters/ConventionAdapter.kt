@@ -1,4 +1,4 @@
-package com.orbitalsonic.prayertimesample.presentation.settings
+package com.orbitalsonic.prayertimesample.presentation.settings.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.orbitalsonic.prayertimesample.databinding.ItemPrayerConventionBinding
+import com.orbitalsonic.prayertimesample.presentation.settings.model.ConventionItem
 
 class ConventionAdapter(
     private val onClick: (ConventionItem) -> Unit

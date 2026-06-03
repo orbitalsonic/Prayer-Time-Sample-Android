@@ -1,6 +1,7 @@
-package com.orbitalsonic.prayertimesample.presentation.prayer
+package com.orbitalsonic.prayertimesample.presentation.prayer.contract
 
 import com.orbitalsonic.prayertimesample.domain.model.PrayerName
+import com.orbitalsonic.prayertimesample.presentation.prayer.model.PrayerUiModel
 
 data class PrayerState(
     val isLoading: Boolean = true,

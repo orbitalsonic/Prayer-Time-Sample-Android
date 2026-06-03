@@ -1,4 +1,4 @@
-package com.orbitalsonic.prayertimesample.presentation.prayer
+package com.orbitalsonic.prayertimesample.presentation.prayer.model
 
 import com.orbitalsonic.prayertimesample.R
 import com.orbitalsonic.prayertimesample.domain.model.PrayerName

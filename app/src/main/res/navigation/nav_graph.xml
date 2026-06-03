@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/prayerFragment"
-        android:name="com.orbitalsonic.prayertimesample.presentation.prayer.PrayerFragment"
+        android:name="com.orbitalsonic.prayertimesample.presentation.prayer.ui.PrayerFragment"
         android:label="@string/prayer_times">
         <action
             android:id="@+id/action_prayer_to_settings"
@@ -15,7 +15,7 @@
 
     <fragment
         android:id="@+id/settingsFragment"
-        android:name="com.orbitalsonic.prayertimesample.presentation.settings.SettingsFragment"
+        android:name="com.orbitalsonic.prayertimesample.presentation.settings.ui.SettingsFragment"
         android:label="@string/settings">
         <action
             android:id="@+id/action_settings_to_prayerConventionFragment"
@@ -27,7 +27,7 @@
 
     <fragment
         android:id="@+id/prayerConventionFragment"
-        android:name="com.orbitalsonic.prayertimesample.presentation.settings.PrayerConventionFragment"
+        android:name="com.orbitalsonic.prayertimesample.presentation.settings.ui.PrayerConventionFragment"
         android:label="@string/prayer_time_convention">
         <action
             android:id="@+id/action_prayerConventionFragment_to_customAngleFragment"
@@ -36,11 +36,11 @@
 
     <fragment
         android:id="@+id/customAngleFragment"
-        android:name="com.orbitalsonic.prayertimesample.presentation.settings.CustomAngleFragment"
+        android:name="com.orbitalsonic.prayertimesample.presentation.settings.ui.CustomAngleFragment"
         android:label="@string/ptc_custom" />
 
     <fragment
         android:id="@+id/manualCorrectionFragment"
-        android:name="com.orbitalsonic.prayertimesample.presentation.settings.ManualCorrectionFragment"
+        android:name="com.orbitalsonic.prayertimesample.presentation.settings.ui.ManualCorrectionFragment"
         android:label="@string/manual_correction" />
 </navigation>

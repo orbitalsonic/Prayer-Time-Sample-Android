@@ -1,4 +1,4 @@
-package com.orbitalsonic.prayertimesample.presentation.prayer
+package com.orbitalsonic.prayertimesample.presentation.prayer.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.orbitalsonic.prayertimesample.R
 import com.orbitalsonic.prayertimesample.databinding.ItemPrayerTimeBinding
 import com.orbitalsonic.prayertimesample.domain.model.PrayerName
+import com.orbitalsonic.prayertimesample.presentation.prayer.model.PrayerUiModel
 
 class PrayerListAdapter(
     private val onNotificationModeClick: (PrayerName) -> Unit

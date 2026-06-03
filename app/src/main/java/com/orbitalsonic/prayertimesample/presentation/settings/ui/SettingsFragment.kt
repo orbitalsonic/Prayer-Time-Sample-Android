@@ -1,4 +1,4 @@
-package com.orbitalsonic.prayertimesample.presentation.settings
+package com.orbitalsonic.prayertimesample.presentation.settings.ui
 
 import android.Manifest
 import android.content.Intent
@@ -9,6 +9,7 @@ import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
@@ -20,6 +21,9 @@ import com.orbitalsonic.prayertimesample.PrayerTimeApp
 import com.orbitalsonic.prayertimesample.R
 import com.orbitalsonic.prayertimesample.databinding.FragmentSettingsBinding
 import com.orbitalsonic.prayertimesample.domain.model.PermissionStatus
+import com.orbitalsonic.prayertimesample.presentation.settings.contract.SettingsIntent
+import com.orbitalsonic.prayertimesample.presentation.settings.contract.SettingsState
+import com.orbitalsonic.prayertimesample.presentation.settings.viewmodel.SettingsViewModel
 import com.orbitalsonic.sonicopt.enums.AsrJuristicMethod
 import com.orbitalsonic.sonicopt.enums.HighLatitudeAdjustment
 import com.orbitalsonic.sonicopt.enums.PrayerTimeConvention
@@ -98,7 +102,7 @@ class SettingsFragment : Fragment() {
     }
 
     private fun renderPermissionStatus(
-        view: android.widget.TextView,
+        view: TextView,
         status: PermissionStatus?
     ) {
         view.text = when (status) {

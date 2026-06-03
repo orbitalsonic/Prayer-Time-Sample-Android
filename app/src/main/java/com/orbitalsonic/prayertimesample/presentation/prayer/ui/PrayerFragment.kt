@@ -1,9 +1,8 @@
-package com.orbitalsonic.prayertimesample.presentation.prayer
+package com.orbitalsonic.prayertimesample.presentation.prayer.ui
 
 import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,7 +11,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -21,6 +19,11 @@ import com.orbitalsonic.prayertimesample.PrayerTimeApp
 import com.orbitalsonic.prayertimesample.R
 import com.orbitalsonic.prayertimesample.databinding.FragmentPrayerBinding
 import com.orbitalsonic.prayertimesample.lifecycle.TimeChangeLifecycleObserver
+import com.orbitalsonic.prayertimesample.presentation.prayer.contract.PrayerEffect
+import com.orbitalsonic.prayertimesample.presentation.prayer.contract.PrayerIntent
+import com.orbitalsonic.prayertimesample.presentation.prayer.contract.PrayerState
+import com.orbitalsonic.prayertimesample.presentation.prayer.adapters.PrayerListAdapter
+import com.orbitalsonic.prayertimesample.presentation.prayer.viewmodel.PrayerViewModel
 import kotlinx.coroutines.launch
 
 class PrayerFragment : Fragment() {

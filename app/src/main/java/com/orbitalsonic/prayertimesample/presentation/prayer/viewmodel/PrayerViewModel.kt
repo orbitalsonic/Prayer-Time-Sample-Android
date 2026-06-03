@@ -1,4 +1,4 @@
-package com.orbitalsonic.prayertimesample.presentation.prayer
+package com.orbitalsonic.prayertimesample.presentation.prayer.viewmodel
 
 import androidx.lifecycle.viewModelScope
 import com.orbitalsonic.prayertimesample.domain.model.PrayerName
@@ -8,6 +8,10 @@ import com.orbitalsonic.prayertimesample.domain.usecase.ObserveLocationUseCase
 import com.orbitalsonic.prayertimesample.domain.usecase.ObserveNotificationSettingsUseCase
 import com.orbitalsonic.prayertimesample.domain.usecase.RefreshPrayerTimesUseCase
 import com.orbitalsonic.prayertimesample.presentation.common.MviViewModel
+import com.orbitalsonic.prayertimesample.presentation.prayer.contract.PrayerEffect
+import com.orbitalsonic.prayertimesample.presentation.prayer.contract.PrayerIntent
+import com.orbitalsonic.prayertimesample.presentation.prayer.contract.PrayerState
+import com.orbitalsonic.prayertimesample.presentation.prayer.model.buildPrayerUiModels
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.combine

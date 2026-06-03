@@ -1,4 +1,4 @@
-package com.orbitalsonic.prayertimesample.presentation.settings
+package com.orbitalsonic.prayertimesample.presentation.settings.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -66,7 +66,8 @@ class CustomAngleFragment : Fragment() {
                 viewLifecycleOwner.lifecycleScope.launch {
                     val isha = appContainer.prayerPreferencesDataStore.getPrayerCustomAngle().ishaAngle
                     appContainer.prayerPreferencesDataStore.setPrayerCustomAngle(selected, isha)
-                    appContainer.prayerPreferencesDataStore.setPrayerTimeConvention(PrayerTimeConvention.CUSTOM)
+                    appContainer.prayerPreferencesDataStore.setPrayerTimeConvention(
+                        PrayerTimeConvention.CUSTOM)
                     appContainer.refreshPrayerTimesUseCase()
                     refreshValues()
                 }
@@ -86,7 +87,8 @@ class CustomAngleFragment : Fragment() {
                 viewLifecycleOwner.lifecycleScope.launch {
                     val fajr = appContainer.prayerPreferencesDataStore.getPrayerCustomAngle().fajrAngle
                     appContainer.prayerPreferencesDataStore.setPrayerCustomAngle(fajr, selected)
-                    appContainer.prayerPreferencesDataStore.setPrayerTimeConvention(PrayerTimeConvention.CUSTOM)
+                    appContainer.prayerPreferencesDataStore.setPrayerTimeConvention(
+                        PrayerTimeConvention.CUSTOM)
                     appContainer.refreshPrayerTimesUseCase()
                     refreshValues()
                 }
